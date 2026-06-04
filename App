@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAMSOFT MARKET | Premium E-Commerce</title>
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for clean icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 font-sans flex flex-col min-h-screen">
+
+    <!-- NAVIGATION BAR -->
+    <header class="bg-indigo-900 text-white sticky top-0 z-50 shadow-md">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-black tracking-wider text-yellow-400">SAMSOFT <span class="text-white">MARKET</span></a>
+            
+            <nav class="hidden md:flex space-x-6 font-medium">
+                <a href="#" class="hover:text-yellow-400 transition">Home</a>
+                <a href="#" class="hover:text-yellow-400 transition">Shop</a>
+                <a href="#" class="hover:text-yellow-400 transition">Deals</a>
+                <a href="#" class="hover:text-yellow-400 transition">Contact</a>
+            </nav>
+
+            <div class="relative">
+                <button onclick="toggleCart()" class="bg-indigo-700 hover:bg-indigo-600 px-4 py-2 rounded-full flex items-center gap-2 transition relative">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="hidden sm:inline">Cart</span>
+                    <span id="cart-count" class="bg-yellow-400 text-slate-900 text-xs font-bold px-2 py-0.5 rounded-full">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO BANNER -->
+    <section class="bg-gradient-to-r from-indigo-800 to-purple-700 text-white py-20 px-4 text-center">
+        <div class="max-w-3xl mx-auto">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-4 animate-fade-in">Welcome to SAMSOFT MARKET</h1>
+            <p class="text-xl md:text-2xl text-indigo-200 mb-8">Discover top-tier tech, sleek electronics, and premium everyday essentials.</p>
+            <a href="#shop" class="bg-yellow-400 hover:bg-yellow-300 text-indigo-900 font-bold px-8 py-3 rounded-lg shadow-lg transition transform hover:-translate-y-1">Shop Latest Tech</a>
+        </div>
+    </section>
+
+    <!-- MAIN SHOP SECTION -->
+    <main id="shop" class="container mx-auto px-4 py-12 flex-grow">
+        <h2 class="text-3xl font-bold text-gray-800 mb-8 border-b-2 border-indigo-100 pb-2">Featured Products</h2>
+        
+        <!-- Product Grid -->
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            <!-- JavaScript will inject products here -->
+        </div>
+    </main>
+
+    <!-- SHOPPING CART SIDEBAR (Hidden by default) -->
+    <div id="cart-sidebar" class="fixed inset-0 bg-black bg-opacity-50 z-50 translate-x-full transition-transform duration-300 flex justify-end">
+        <div class="bg-white w-full max-w-md h-full flex flex-col shadow-2xl">
+            <div class="p-4 bg-indigo-950 text-white flex justify-between items-center">
+                <h3 class="text-xl font-bold">Your Shopping Cart</h3>
+                <button onclick="toggleCart()" class="text-white hover:text-yellow-400 text-2xl">&times;</button>
+            </div>
+            
+            <!-- Cart Items List -->
+            <div id="cart-items" class="p-4 flex-grow overflow-y-auto space-y-4">
+                <!-- JavaScript dynamically inserts items here -->
+                <p id="empty-cart-msg" class="text-gray-500 text-center py-8">Your cart is currently empty.</p>
+            </div>
+
+            <!-- Cart Footer / Checkout -->
+            <div class="p-4 border-t border-gray-200 bg-gray-50">
+                <div class="flex justify-between items-center mb-4 text-lg font-bold text-gray-800">
+                    <span>Total:</span>
+                    <span id="cart-total">$0.00</span>
+                </div>
+                <button onclick="checkout()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg shadow transition">
+                    Proceed to Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-gray-400 py-8 border-t border-slate-800 mt-auto">
+        <div class="container mx-auto px-4 text-center">
+            <p class="font-semibold text-white mb-2">SAMSOFT MARKET &copy; 2026</p>
+            <p class="text-sm">Built with precision, powered by innovation.</p>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT -->
+    <script>
+        // Sample Product Data
+        const products = [
+            { id: 1, name: "Samsoft Pro Laptop 15\"", price: 1199.99, image: "https://images.unsplash.com/photo-1496181130204-755241524eab?w=500&auto=format&fit=crop&q=60" },
+            { id: 2, name: "Wireless Noise-Canceling Headphones", price: 249.99, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop&q=60" },
+            { id: 3, name: "Samsoft Smartwatch Ultra", price: 199.99, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=60" },
+            { id: 4, name: "Mechanical Gaming Keyboard", price: 89.99, image: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500&auto=format&fit=crop&q=60" },
+            { id: 5, name: "Ultra-Wide 4K Monitor", price: 449.99, image: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=500&auto=format&fit=crop&q=60" },
+            { id: 6, name: "Ergonomic Wireless Mouse", price: 49.99, image: "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500&auto=format&fit=crop&q=60" }
+        ];
+
+        let cart = [];
+
+        // Render products to the page
+        function displayProducts() {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = products.map(product => `
+                <div class="bg-white rounded-xl shadow hover:shadow-xl transition duration-300 flex flex-col justify-between overflow-hidden group">
+                    <div class="overflow-hidden">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover group-hover:scale-105 transition duration-300">
+                    </div>
+                    <div class="p-5 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">${product.name}</h3>
+                            <p class="text-xl font-extrabold text-indigo-600 mb-4">$${product.price.toFixed(2)}</p>
+                        </div>
+                        <button onclick="addToCart(${product.id})" class="w-full bg-slate-800 hover:bg-indigo-600 text-white font-semibold py-2 rounded-lg transition flex justify-center items-center gap-2">
+                            <i class="fas fa-cart-plus"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Sidebar Toggle
+        function toggleCart() {
+            const sidebar = document.getElementById('cart-sidebar');
+            sidebar.classList.toggle('translate-x-full');
+        }
+
+        // Add item to cart logic
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            updateCart();
+        }
+
+        // Remove item from cart
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCart();
+        }
+
+        // Update Cart DOM
+        function updateCart() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartCount = document.getElementById('cart-count');
+            const cartTotal = document.getElementById('cart-total');
+            const emptyMsg = document.getElementById('empty-cart-msg');
+
+            // Update Total Count
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.innerText = totalCount;
+
+            if(cart.length === 0) {
+                emptyMsg.classList.remove('hidden');
+                cartItemsContainer.innerHTML = '';
+                cartTotal.innerText = '$0.00';
+                return;
+            } else {
+                emptyMsg.classList.add('hidden');
+            }
+
+            // Render Cart Items
+            cartItemsContainer.innerHTML = cart.map(item => `
+                <div class="flex items-center justify-between border-b pb-3 border-gray-100">
+                    <div class="flex items-center gap-3">
+                        <img src="${item.image}" class="w-12 h-12 object-cover rounded-lg">
+                        <div>
+                            <h4 class="font-bold text-gray-800 text-sm max-w-[180px] truncate">${item.name}</h4>
+                            <p class="text-gray-500 text-xs">$${item.price} x ${item.quantity}</p>
+                        </div>
+                    </div>
+                    <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700 p-2">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+            `).join('');
+
+            // Calculate Total Cost
+            const grandTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            cartTotal.innerText = `$${grandTotal.toFixed(2)}`;
+        }
+
+        // Simulate Checkout
+        function checkout() {
+            if (cart.length === 0) {
+                alert("Your cart is empty. Add some products first!");
+                return;
+            }
+            alert("Thank you for choosing SAMSOFT MARKET! Order processing simulated successfully.");
+            cart = [];
+            updateCart();
+            toggleCart();
+        }
+
+        // Initialize Shop
+        displayProducts();
+    </script>
+</body>
+</html>
